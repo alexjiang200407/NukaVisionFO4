@@ -1,0 +1,21 @@
+{
+  "name": "exampleproject",
+  "version-string": "1.0.0",
+  "description": "An example project built using CommonLibF4",
+  "homepage": "https://github.com/Ryan-rsm-McKenzie/CommonLibF4",
+  "license": "MIT",
+  "dependencies": [
+    "args",
+    "boost-stl-interfaces",
+    "catch2",
+    "fmt",
+    "frozen",
+    "nowide",
+    "robin-hood-hashing",
+    "rsm-mmio",
+    "spdlog",
+    "srell",
+    "xbyak",
+    "simpleini"
+  ]
+}

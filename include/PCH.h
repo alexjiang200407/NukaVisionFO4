@@ -32,7 +32,7 @@ namespace stl
 	void write_vfunc()
 	{
 		REL::Relocation<std::uintptr_t> vtbl{ F::VTABLE[index] };
-		T::func = vtbl.write_vfunc(T::size, T::thunk);
+		write_vfunc<T>(vtbl, index);
 	}
 
 	template <class F, class T>
@@ -40,7 +40,25 @@ namespace stl
 	{
 		write_vfunc<F, 0, T>();
 	}
+
+	template <class T>
+	void write_vfunc(REL::Relocation<std::uintptr_t> a_src, size_t a_idx)
+	{
+		T::func = a_src.write_vfunc(a_idx, T::thunk);
+	}
+
 }
+
+template <typename T>
+class Singleton
+{
+public:
+	static T* GetSingleton()
+	{
+		static T singleton{};
+		return &singleton;
+	}
+};
 
 
 #ifdef NEXT_GEN

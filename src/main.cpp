@@ -1,6 +1,6 @@
-#include <string>
 #include "Version.h"
-
+#include <string>
+#include "hooks.h"
 
 spdlog::level::level_enum GetLogLevel()
 {
@@ -104,6 +104,7 @@ extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Load(const F4SE::LoadInterface* a_f
 {
 	F4SE::Init(a_f4se);
 	InitializeLog();
+	NV::Hooks::Install();
 
 	logger::info("{} has been initialized by F4SE", Version::PROJECT);
 

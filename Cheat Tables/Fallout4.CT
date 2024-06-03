@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Character Light - Fill"</Description>
+      <VariableType>Float</VariableType>
+      <Address>Fallout4.exe+6721F44</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"Character Light - Rim"</Description>
+      <VariableType>Float</VariableType>
+      <Address>Fallout4.exe+6721F40</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>2</ID>
+      <Description>"Character Light - Enabled"</Description>
+      <VariableType>Byte</VariableType>
+      <Address>Fallout4.exe+6721BD0</Address>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

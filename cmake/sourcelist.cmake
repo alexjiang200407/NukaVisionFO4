@@ -1,6 +1,10 @@
 set(SOURCES
-	src/main.cpp
+	src/Main.cpp
 	src/hooks.cpp
+	src/Window.cpp
+	src/WindowsMessageMap.cpp
 	include/PCH.h
 	include/hooks.h
+	include/Window.h
+	include/WindowsMessageMap.h
 )

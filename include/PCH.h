@@ -4,8 +4,11 @@
 #include "F4SE/F4SE.h"
 #include "RE/Fallout.h"
 
-#include <spdlog/sinks/basic_file_sink.h>
 #include "SimpleIni.h"
+#include <spdlog/sinks/basic_file_sink.h>
+
+#include <commctrl.h>
+
 #pragma warning(pop)
 
 #define DLLEXPORT __declspec(dllexport)
@@ -26,7 +29,6 @@ namespace stl
 		auto& trampoline = F4SE::GetTrampoline();
 		T::func = trampoline.write_call<5>(a_src, T::thunk);
 	}
-
 
 	template <class F, size_t index, class T>
 	void write_vfunc()
@@ -60,7 +62,6 @@ public:
 	}
 };
 
-
 #ifdef NEXT_GEN
 
 #	define OFFSET(og, ng) ng
@@ -71,6 +72,6 @@ public:
 #	define OFFSET(og, ng) og
 #	define RELOCATION_ID(og, ng) REL::ID(og)
 
-#endif // NEXT_GEN
+#endif  // NEXT_GEN
 
 #include "Version.h"

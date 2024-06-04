@@ -6,14 +6,6 @@ namespace NV
 		public Singleton<Hooks>
 	{
 	private:
-		struct WndProc
-		{
-			static ATOM __stdcall thunk(const WNDCLASSEXA* wnd);
-			static inline REL::Relocation<decltype(thunk)> func;
-			static inline LRESULT __stdcall WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-			static inline WNDPROC prevWndProc;
-		};
-
 		struct CreateD3DAndSwapChain
 		{
 			static void thunk();
@@ -32,10 +24,10 @@ namespace NV
 			static inline REL::Relocation<decltype(thunk)> func;
 		};
 
-		public:
-			static void Install();
+	public:
+		static void Install();
 
-		private:
-			std::atomic<bool> installedHooks;
+	private:
+		std::atomic<bool> installedHooks;
 	};
 }

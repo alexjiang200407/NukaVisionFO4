@@ -1,6 +1,7 @@
 #include "Version.h"
-#include <string>
 #include "hooks.h"
+#include "window.h"
+#include <string>
 
 spdlog::level::level_enum GetLogLevel()
 {
@@ -26,7 +27,8 @@ spdlog::level::level_enum GetLogLevel()
 
 void MessageCallback(F4SE::MessagingInterface::Message* msg)
 {
-	switch (msg->type) {
+	switch (msg->type)
+	{
 	case F4SE::MessagingInterface::kGameDataReady:
 		RE::ConsoleLog::GetSingleton()->PrintLine("%s has been loaded", Version::PROJECT.data());
 		break;
@@ -38,7 +40,8 @@ void MessageCallback(F4SE::MessagingInterface::Message* msg)
 void InitializeLog()
 {
 	auto path = logger::log_directory();
-	if (!path) {
+	if (!path)
+	{
 		F4SE::stl::report_and_fail("Failed to find standard logging directory"sv);
 	}
 
@@ -84,13 +87,15 @@ extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Query(const F4SE::QueryInterface* a
 	a_info->name = Version::PROJECT.data();
 	a_info->version = Version::MAJOR;
 
-	if (a_f4se->IsEditor()) {
+	if (a_f4se->IsEditor())
+	{
 		logger::critical("loaded in editor");
 		return false;
 	}
 
 	const auto ver = a_f4se->RuntimeVersion();
-	if (ver < F4SE::RUNTIME_1_10_162) {
+	if (ver < F4SE::RUNTIME_1_10_162)
+	{
 		logger::critical("unsupported runtime v{}", ver.string());
 		return false;
 	}
@@ -105,6 +110,7 @@ extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Load(const F4SE::LoadInterface* a_f
 	F4SE::Init(a_f4se);
 	InitializeLog();
 	NV::Hooks::Install();
+	NV::WindowSubclass::RegisterClassExHook::Install();
 
 	logger::info("{} has been initialized by F4SE", Version::PROJECT);
 

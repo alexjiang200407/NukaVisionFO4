@@ -156,6 +156,7 @@ target_link_libraries(
 		CommonLibF4::CommonLibF4
 		fmt::fmt
 		spdlog::spdlog
+		comctl32.lib
 )
 
 target_precompile_headers(

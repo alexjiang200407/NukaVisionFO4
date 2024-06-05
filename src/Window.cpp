@@ -55,3 +55,8 @@ LRESULT NV::WindowSubclass::ProcessMessage(HWND hWnd, INT uMsg, WPARAM wParam, L
 	logger::trace("MSG: {}, wParam: 0x{:x}, lParam: 0x{:x}", msgMap.ToString(uMsg), wParam, lParam);
 	return prevWndProc(hWnd, uMsg, wParam, lParam);
 }
+
+void NV::WindowSubclass::Init()
+{
+	RegisterClassExHook::Install();
+}

@@ -5,13 +5,19 @@ namespace NV
 {
 	class WindowSubclass
 	{
+	public:
+		static void Init();
+
 	private:
+		WindowSubclass() = default;
+
+	private:
+		LRESULT ProcessMessage(HWND hWnd, INT uMsg, WPARAM wParam, LPARAM lParam);
+		
 		static LRESULT CALLBACK s_SubclassProc(HWND hWnd, UINT uMsg, WPARAM wParam,
 			LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData);
 
-		LRESULT ProcessMessage(HWND hWnd, INT uMsg, WPARAM wParam, LPARAM lParam);
-
-	public:
+	private:
 		struct RegisterClassExHook
 		{
 			static void Install();

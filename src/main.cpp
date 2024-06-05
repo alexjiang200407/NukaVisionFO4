@@ -1,7 +1,7 @@
 #include "Version.h"
-#include "hooks.h"
 #include "window.h"
 #include <string>
+#include "ImGuiManager.h"
 
 spdlog::level::level_enum GetLogLevel()
 {
@@ -109,8 +109,8 @@ extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Load(const F4SE::LoadInterface* a_f
 {
 	F4SE::Init(a_f4se);
 	InitializeLog();
-	NV::Hooks::Install();
-	NV::WindowSubclass::RegisterClassExHook::Install();
+	NV::WindowSubclass::Init();
+	NV::ImGuiManager::Init();
 
 	logger::info("{} has been initialized by F4SE", Version::PROJECT);
 

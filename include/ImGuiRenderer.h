@@ -1,9 +1,10 @@
 #pragma once
 #include <d3d11.h>
+#include "ImGuiElement.h"
 
-namespace NV
+namespace ImGui
 {
-	class ImGuiManager
+	class ImGuiRenderer
 	{
 	private:
 		struct D3D11CreateDeviceAndSwapChainHook
@@ -32,6 +33,10 @@ namespace NV
 		};
 
 	public:
-		static void Init();
+		void Init();
+		void RegisterImGuiElement(ImGuiElement&& element);
+
+	private:
+		std::vector<ImGuiElement> elements{};
 	};
 }

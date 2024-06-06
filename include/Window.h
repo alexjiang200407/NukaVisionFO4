@@ -1,7 +1,8 @@
 #pragma once
+#include "ImGuiRenderer.h"
 #include "WindowsMessageMap.h"
 
-namespace NV
+namespace Plugin
 {
 	class WindowSubclass
 	{
@@ -13,7 +14,7 @@ namespace NV
 
 	private:
 		LRESULT ProcessMessage(HWND hWnd, INT uMsg, WPARAM wParam, LPARAM lParam);
-		
+
 		static LRESULT CALLBACK s_SubclassProc(HWND hWnd, UINT uMsg, WPARAM wParam,
 			LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData);
 
@@ -28,6 +29,7 @@ namespace NV
 
 	private:
 		WindowsMessageMap msgMap;
-		static WNDPROC prevWndProc;
+		ImGui::ImGuiRenderer imgui;
+		static inline WNDPROC prevWndProc;
 	};
 }

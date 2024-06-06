@@ -1,7 +1,6 @@
 #include "Version.h"
-#include "window.h"
+#include "Window.h"
 #include <string>
-#include "ImGuiManager.h"
 
 spdlog::level::level_enum GetLogLevel()
 {
@@ -87,6 +86,8 @@ extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Query(const F4SE::QueryInterface* a
 	a_info->name = Version::PROJECT.data();
 	a_info->version = Version::MAJOR;
 
+	InitializeLog();
+
 	if (a_f4se->IsEditor())
 	{
 		logger::critical("loaded in editor");
@@ -100,6 +101,8 @@ extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Query(const F4SE::QueryInterface* a
 		return false;
 	}
 
+	Plugin::WindowSubclass::Init();
+
 	return true;
 }
 
@@ -108,9 +111,6 @@ extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Query(const F4SE::QueryInterface* a
 extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Load(const F4SE::LoadInterface* a_f4se)
 {
 	F4SE::Init(a_f4se);
-	InitializeLog();
-	NV::WindowSubclass::Init();
-	NV::ImGuiManager::Init();
 
 	logger::info("{} has been initialized by F4SE", Version::PROJECT);
 

@@ -8,6 +8,7 @@
 #include <spdlog/sinks/basic_file_sink.h>
 
 #include <commctrl.h>
+#include <imgui.h>
 
 #pragma warning(pop)
 

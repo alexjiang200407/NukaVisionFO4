@@ -1,7 +1,7 @@
 #pragma once
 
 
-namespace NV
+namespace Plugin
 {
 	class WindowsMessageMap
 	{

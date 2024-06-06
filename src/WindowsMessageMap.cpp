@@ -5,7 +5,7 @@
 		msg, #msg             \
 	}
 
-NV::WindowsMessageMap::WindowsMessageMap() :
+Plugin::WindowsMessageMap::WindowsMessageMap() :
 	map({ REGISTER_MESSAGE(WM_CREATE),
 		REGISTER_MESSAGE(WM_DESTROY),
 		REGISTER_MESSAGE(WM_MOVE),
@@ -179,7 +179,7 @@ NV::WindowsMessageMap::WindowsMessageMap() :
 		REGISTER_MESSAGE(WM_IME_REQUEST) })
 {}
 
-std::string NV::WindowsMessageMap::ToString(UINT msg) const
+std::string Plugin::WindowsMessageMap::ToString(UINT msg) const
 {
 	const auto i = map.find(msg);
 

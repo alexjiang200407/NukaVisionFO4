@@ -104,6 +104,7 @@ endif ()
 
 find_package(fmt REQUIRED CONFIG)
 find_package(spdlog REQUIRED CONFIG)
+find_package(imgui CONFIG REQUIRED)
 find_path(SIMPLEINI_INCLUDE_DIRS "ConvertUTF.c")
 
 # ---- Add source files ----
@@ -157,6 +158,7 @@ target_link_libraries(
 		fmt::fmt
 		spdlog::spdlog
 		comctl32.lib
+		imgui::imgui
 )
 
 target_precompile_headers(

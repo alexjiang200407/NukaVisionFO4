@@ -24,13 +24,15 @@ HRESULT ImGui::ImGuiRenderer::D3D11CreateDeviceAndSwapChainHook::thunk(IDXGIAdap
 
 	REL::Relocation<std::uintptr_t> target{ (uintptr_t)vtbl };
 
+
+	logger::info("Writing PresentHook hook to address 0x{:x}", target.address());
 	stl::write_vfunc<PresentHook>(target, 8);
 
 	ImGui::CreateContext();
 
-	HWND wnd = GetActiveWindow();
+	HWND hWnd = GetActiveWindow();
 
-	if (!ImGui_ImplWin32_Init(wnd))
+	if (!ImGui_ImplWin32_Init(hWnd))
 	{
 		logger::error("ImGui initialization failed (Win32)");
 		return ret;
@@ -42,6 +44,7 @@ HRESULT ImGui::ImGuiRenderer::D3D11CreateDeviceAndSwapChainHook::thunk(IDXGIAdap
 	}
 
 	logger::info("Successfully initialized ImGui...");
+	initialized.store(true);
 
 	auto& io = ImGui::GetIO();
 	io.ConfigFlags |= (ImGuiConfigFlags_NavEnableKeyboard | ImGuiConfigFlags_NavEnableGamepad | ImGuiConfigFlags_NoMouseCursorChange);
@@ -61,9 +64,17 @@ void ImGui::ImGuiRenderer::Init()
 	D3D11CreateDeviceAndSwapChainHook::Install();
 }
 
-void ImGui::ImGuiRenderer::RegisterImGuiElement(ImGuiElement&& element)
+void ImGui::ImGuiRenderer::UnregisterImGuiElement(ImGuiElement* element)
 {
-	elements.push_back(element);
+	auto it = elements.find(element);
+
+	if (it != elements.end())
+		elements.erase(it);
+}
+
+bool ImGui::ImGuiRenderer::isInitialized()
+{
+	return initialized.load();
 }
 
 HRESULT ImGui::ImGuiRenderer::PresentHook::thunk(IDXGISwapChain* a_self, UINT a_syncInterval, UINT a_flags)
@@ -73,7 +84,8 @@ HRESULT ImGui::ImGuiRenderer::PresentHook::thunk(IDXGISwapChain* a_self, UINT a_
 
 	ImGui::NewFrame();
 
-	ImGui::ShowDemoWindow();
+	for (const auto& pElement : elements)
+		pElement->DoFrame();
 
 	ImGui::EndFrame();
 	ImGui::Render();

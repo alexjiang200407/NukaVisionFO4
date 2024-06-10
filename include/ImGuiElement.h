@@ -4,6 +4,7 @@ namespace ImGui
 {
 	class ImGuiElement
 	{
-		virtual bool Draw() = 0;
+	public:
+		virtual void DoFrame() = 0;
 	};
 }

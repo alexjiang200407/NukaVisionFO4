@@ -4,9 +4,11 @@ set(SOURCES
 	src/WindowsMessageMap.cpp
 	src/ImGuiRenderer.cpp
 	src/ImGuiElement.cpp
+	src/UI.cpp
 	include/PCH.h
 	include/Window.h
 	include/WindowsMessageMap.h
 	include/ImGuiRenderer.h
 	include/ImGuiElement.h
+	include/UI.h
 )

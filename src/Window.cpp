@@ -28,13 +28,14 @@ LRESULT Plugin::WindowSubclass::RegisterClassExHook::s_WndProc(HWND hWnd, UINT u
 	if (uMsg == WM_CREATE)
 	{
 		logger::info("Creating window");
-
-		wnd.imgui.Init();
-
 		if (SetWindowSubclass(hWnd, WindowSubclass::s_SubclassProc, 0, (DWORD_PTR)&wnd) == FALSE)
 		{
 			logger::error("FAILED TO SET WINDOW SUBCLASS");
+			return prevWndProc(hWnd, uMsg, wParam, lParam);
 		}
+
+		wnd.imgui.Init();
+		wnd.ui = wnd.imgui.RegisterImGuiElement<ImGui::UI>();
 	}
 
 	return prevWndProc(hWnd, uMsg, wParam, lParam);

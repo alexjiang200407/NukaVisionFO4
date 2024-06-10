@@ -1,6 +1,7 @@
 #pragma once
 #include "ImGuiRenderer.h"
 #include "WindowsMessageMap.h"
+#include "UI.h"
 
 namespace Plugin
 {
@@ -31,5 +32,6 @@ namespace Plugin
 		WindowsMessageMap msgMap;
 		ImGui::ImGuiRenderer imgui;
 		static inline WNDPROC prevWndProc;
+		ImGui::UI* ui = nullptr;
 	};
 }

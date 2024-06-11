@@ -3,12 +3,37 @@
 void ImGui::UI::DoFrame()
 {
 	if (IsKeyPressed(ImGuiKey_End))
-	{
-		hidden = !hidden;
-	}
+		ToggleVisibility();
 
 	if (!hidden)
 	{
-		ShowDemoWindow();
+		//ShowDemoWindow();
+		Begin("##NukaVisionControlPanel");
+
+		Text("Hello World!");
+
+		End();
+	}
+}
+
+
+
+bool ImGui::UI::IsHidden() const
+{
+	return hidden;
+}
+
+void ImGui::UI::ToggleVisibility()
+{
+	auto& io = GetIO();
+	if (hidden)
+	{
+		io.MouseDrawCursor = true;
+		hidden = false;
+	}
+	else
+	{
+		io.MouseDrawCursor = false;
+		hidden = true;
 	}
 }

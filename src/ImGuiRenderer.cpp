@@ -50,7 +50,6 @@ HRESULT ImGui::ImGuiRenderer::D3D11CreateDeviceAndSwapChainHook::thunk(IDXGIAdap
 	io.ConfigFlags |= (ImGuiConfigFlags_NavEnableKeyboard | ImGuiConfigFlags_NavEnableGamepad | ImGuiConfigFlags_NoMouseCursorChange);
 	io.IniFilename = nullptr;
 	io.ConfigWindowsMoveFromTitleBarOnly = true;
-	io.MouseDrawCursor = true;
 	{
 		io.ConfigWindowsMoveFromTitleBarOnly = true;
 		io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;

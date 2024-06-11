@@ -41,7 +41,7 @@ LRESULT Plugin::WindowSubclass::RegisterClassExHook::s_WndProc(HWND hWnd, UINT u
 	return prevWndProc(hWnd, uMsg, wParam, lParam);
 }
 
-LRESULT Plugin::WindowSubclass::s_SubclassProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData)
+LRESULT Plugin::WindowSubclass::s_SubclassProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR, DWORD_PTR dwRefData)
 {
 	WindowSubclass* pWnd = reinterpret_cast<WindowSubclass*>(dwRefData);
 
@@ -60,6 +60,23 @@ LRESULT Plugin::WindowSubclass::ProcessMessage(HWND hWnd, INT uMsg, WPARAM wPara
 
 	if (ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam))
 		return true;
+
+
+	// Block keyboard input if UI is active
+	if (!ui->IsHidden())
+		switch (uMsg)
+		{
+		case WM_SYSKEYUP:
+		case WM_KEYUP:
+		case WM_SYSKEYDOWN:
+		case WM_KEYDOWN:
+		case WM_MOUSEMOVE:
+		case WM_INPUT:
+		{
+			logger::trace("Blocked Windows Message!");
+			return 1;
+		}
+		};
 
 	return prevWndProc(hWnd, uMsg, wParam, lParam);
 }

@@ -9,6 +9,10 @@ namespace ImGui
 	public:
 		virtual void DoFrame() override;
 
+
+		bool IsHidden() const;
+
+		void ToggleVisibility();
 	private:
 		bool hidden = true;
 	};

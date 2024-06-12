@@ -5,7 +5,7 @@
 
 void ImGui::ImGuiRenderer::D3D11CreateDeviceAndSwapChainHook::Install()
 {
-	REL::Relocation<std::uintptr_t> target{ REL::ID(254484) };  // D3D11CreateDeviceAndSwapChainHook
+	REL::Relocation<std::uintptr_t> target{ RELOCATION_ID(254484, 254484) };  // D3D11CreateDeviceAndSwapChainHook
 	stl::write_vfunc<D3D11CreateDeviceAndSwapChainHook>(target, 0);
 	logger::info("Writing D3D11CreateDeviceAndSwapChain hook to address 0x{:x}", target.address());
 }
@@ -31,6 +31,7 @@ HRESULT ImGui::ImGuiRenderer::D3D11CreateDeviceAndSwapChainHook::thunk(IDXGIAdap
 	ImGui::CreateContext();
 
 	HWND hWnd = GetActiveWindow();
+	GetWindowRect(hWnd, &oldRect);
 
 	if (!ImGui_ImplWin32_Init(hWnd))
 	{
@@ -61,6 +62,7 @@ HRESULT ImGui::ImGuiRenderer::D3D11CreateDeviceAndSwapChainHook::thunk(IDXGIAdap
 void ImGui::ImGuiRenderer::Init()
 {
 	D3D11CreateDeviceAndSwapChainHook::Install();
+	ClipCursorHook::Install();
 }
 
 void ImGui::ImGuiRenderer::UnregisterImGuiElement(ImGuiElement* element)
@@ -83,6 +85,7 @@ HRESULT ImGui::ImGuiRenderer::PresentHook::thunk(IDXGISwapChain* a_self, UINT a_
 
 	ImGui::NewFrame();
 
+
 	for (const auto& pElement : elements)
 		pElement->DoFrame();
 
@@ -90,4 +93,20 @@ HRESULT ImGui::ImGuiRenderer::PresentHook::thunk(IDXGISwapChain* a_self, UINT a_
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 	return func(a_self, a_syncInterval, a_flags);
+}
+
+void ImGui::ImGuiRenderer::ClipCursorHook::Install()
+{
+	REL::Relocation<std::uintptr_t> target{ RELOCATION_ID(641385, 641385) };  // ClipCursorHook
+	stl::write_vfunc<ClipCursorHook>(target, 0);
+	logger::info("Writing ClipCursorHook hook to address 0x{:x}", target.address());
+}
+
+BOOL ImGui::ImGuiRenderer::ClipCursorHook::thunk(RECT* lpRect)
+{
+	auto& io = GetIO();
+	if (io.MouseDrawCursor)
+		*lpRect = oldRect;
+
+	return func(lpRect);
 }

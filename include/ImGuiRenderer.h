@@ -5,6 +5,7 @@
 
 namespace ImGui
 {
+
 	class ImGuiRenderer
 	{
 	private:
@@ -33,6 +34,13 @@ namespace ImGui
 			static inline REL::Relocation<decltype(thunk)> func;
 		};
 
+		struct ClipCursorHook
+		{
+			static void Install();
+			static BOOL CALLBACK thunk(RECT* lpRect);
+			static inline REL::Relocation<decltype(thunk)> func;
+		};
+
 		struct ImGuiElementComparator
 		{
 			using is_transparent = void;
@@ -49,7 +57,12 @@ namespace ImGui
 			{
 				return lhs < rhs.get();
 			}
+			bool operator()(const ImGuiElement* lhs, const ImGuiElement* rhs) const
+			{
+				return lhs < rhs;
+			}
 		};
+
 
 	public:
 		void Init();
@@ -60,11 +73,12 @@ namespace ImGui
 			return static_cast<T*>(elements.insert(std::make_unique<T>()).first->get());
 		};
 
-		void UnregisterImGuiElement(ImGuiElement* element);
-
+		void UnregisterImGuiElement(ImGuiElement* a_element);
 		bool isInitialized();
+
 	private:
+		static inline RECT oldRect;
 		static inline std::atomic<bool> initialized;
-		static inline std::set<std::unique_ptr<ImGuiElement>, ImGuiElementComparator> elements{};
+		static inline std::set<std::unique_ptr<ImGuiElement>, ImGuiElementComparator> elements;
 	};
 }

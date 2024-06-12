@@ -5,6 +5,10 @@ set(SOURCES
 	src/ImGuiRenderer.cpp
 	src/ImGuiElement.cpp
 	src/UI.cpp
+	src/widgets/CharacterLighting.cpp
+	src/widgets/Widget.cpp
+	include/widgets/CharacterLighting.h
+	include/widgets/Widget.h
 	include/PCH.h
 	include/Window.h
 	include/WindowsMessageMap.h

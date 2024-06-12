@@ -12,6 +12,8 @@ void ImGui::UI::DoFrame()
 
 		Text("Hello World!");
 
+		characterLight.DoFrame();
+
 		End();
 	}
 }
